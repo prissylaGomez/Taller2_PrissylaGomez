@@ -19,7 +19,15 @@ private:
     nodoAVL* insertar(nodoAVL* nodo, paciente* p);
     nodoAVL* nodoValorMinimo(nodoAVL* nodo);
     nodoAVL* eliminar(nodoAVL* nodo, const std::string& id);
+    
+    void inorden(nodoAVL* nodo);
+    void preorden(nodoAVL* nodo);
+    void postorden(nodoAVL* nodo);
 
+    paciente* buscarPorIdRec(nodoAVL* nodo, std::string& id, std::string& ruta);
+    paciente* buscarPorNombreRec(nodoAVL* nodo, std::string& nombre, std::string& ruta);
+
+    void destruirRecursivo(nodoAVL* nodo);
 
 public:
     arbolAVL();
@@ -27,7 +35,12 @@ public:
 
     void insertar(paciente* p);
     void eliminar(std::string& id);
-   
+    paciente* buscarPorId(std::string& id, std::string& ruta);
+    paciente* buscarPorNombre(std::string& nombre, std::string& ruta);
+    void mostrarInorden();
+    void mostrarPreorden();
+    void mostrarPostorden();
+
     int getAltura();
     int getFactorBalanceRaiz();
     int getCantidad();

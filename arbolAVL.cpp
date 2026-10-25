@@ -3,18 +3,27 @@
 
 arbolAVL::arbolAVL() : raiz(nullptr), cantidad(0) {}
 
+arbolAVL::~arbolAVL() {
+    destruirRecursivo(raiz);
+}
+
+void arbolAVL::destruirRecursivo(nodoAVL* nodo) {
+    if (nodo != nullptr) {
+        destruirRecursivo(nodo->izquierdo);
+        destruirRecursivo(nodo->derecho);
+        delete nodo->dato;
+        delete nodo;
+    }
+}
 int arbolAVL::obtenerAltura(nodoAVL* n){
     return (n == nullptr) ? 0 : n->altura;
 }
-
 int arbolAVL::max(int a, int b){
     return (a > b) ? a : b;
 }
-
 int arbolAVL::obtenerBalance(nodoAVL* n){
     return (n == nullptr) ? 0 : obtenerAltura(n->izquierdo) - obtenerAltura(n->derecho);
 }
-
 nodoAVL* arbolAVL::rotacionDerecha(nodoAVL* y) {
     nodoAVL* x = y->izquierdo;
     nodoAVL* T2 = x->derecho;
@@ -27,7 +36,6 @@ nodoAVL* arbolAVL::rotacionDerecha(nodoAVL* y) {
 
     return x;
 }
-
 nodoAVL* arbolAVL::rotacionIzquierda(nodoAVL* x) {
     nodoAVL* y = x->derecho;
     nodoAVL* T2 = y->izquierdo;
@@ -40,7 +48,6 @@ nodoAVL* arbolAVL::rotacionIzquierda(nodoAVL* x) {
 
     return y;
 }
-
 nodoAVL* arbolAVL::insertar(nodoAVL* nodo, paciente* p) {
     if (nodo == nullptr) {
         cantidad++;
@@ -75,11 +82,9 @@ nodoAVL* arbolAVL::insertar(nodoAVL* nodo, paciente* p) {
 
     return nodo;
 }
-
 void arbolAVL::insertar(paciente* p) {
     raiz = insertar(raiz, p);
 }
-
 nodoAVL* arbolAVL::nodoValorMinimo(nodoAVL* nodo) {
     nodoAVL* actual = nodo;
     while (actual->izquierdo != nullptr) {
@@ -139,7 +144,80 @@ nodoAVL* arbolAVL::eliminar(nodoAVL* nodo, const std::string& id) {
 void arbolAVL::eliminar(std::string& id) {
     raiz = eliminar(raiz, id);
 }
+paciente* arbolAVL::buscarPorIdRec(nodoAVL* nodo, std::string& id, std::string& ruta){
+    if (nodo == nullptr) return nullptr;
 
+    if (ruta.empty()) {
+        ruta = nodo->dato->getId();
+    } else {
+        ruta += " -> " + nodo->dato->getId();
+    }
+
+    if (nodo->dato->getId() == id) {
+        return nodo->dato;
+    }
+    if (id < nodo->dato->getId()) {
+        return buscarPorIdRec(nodo->izquierdo, id, ruta);
+    }
+    return buscarPorIdRec(nodo->derecho, id, ruta);
+}
+
+paciente* arbolAVL::buscarPorId(std::string& id, std::string& ruta){
+    ruta = "";
+    return buscarPorIdRec(raiz, id, ruta);
+}
+
+paciente* arbolAVL::buscarPorNombreRec(nodoAVL* nodo, std::string& nombre, std::string& ruta){
+    if (nodo == nullptr) return nullptr;
+
+    if (ruta.empty()) {
+        ruta = nodo->dato->getId();
+    } else {
+        ruta += " -> " + nodo->dato->getId();
+    }
+
+    if (nodo->dato->getNombre() == nombre) {
+        return nodo->dato;
+    }
+
+    paciente* encontrado = buscarPorNombreRec(nodo->izquierdo, nombre, ruta);
+    if (encontrado != nullptr) return encontrado;
+
+    return buscarPorNombreRec(nodo->derecho, nombre, ruta);
+}
+
+paciente* arbolAVL::buscarPorNombre(std::string& nombre, std::string& ruta){
+    ruta = "";
+    return buscarPorNombreRec(raiz, nombre, ruta);
+}
+
+void arbolAVL::inorden(nodoAVL* nodo){
+    if (nodo != nullptr) {
+        inorden(nodo->izquierdo);
+        std::cout << "- " << nodo->dato->getNombre() << " (" << nodo->dato->getId() << ")" << std::endl;
+        inorden(nodo->derecho);
+    }
+}
+
+void arbolAVL::preorden(nodoAVL* nodo){
+    if (nodo != nullptr) {
+        std::cout << "- " << nodo->dato->getNombre() << " (" << nodo->dato->getId() << ")" << std::endl;
+        preorden(nodo->izquierdo);
+        preorden(nodo->derecho);
+    }
+}
+
+void arbolAVL::postorden(nodoAVL* nodo){
+    if (nodo != nullptr) {
+        postorden(nodo->izquierdo);
+        postorden(nodo->derecho);
+        std::cout << "- " << nodo->dato->getNombre() << " (" << nodo->dato->getId() << ")" << std::endl;
+    }
+}
+
+void arbolAVL::mostrarInorden() { inorden(raiz); }
+void arbolAVL::mostrarPreorden() { preorden(raiz); }
+void arbolAVL::mostrarPostorden() { postorden(raiz); }
 int arbolAVL::getAltura() { return obtenerAltura(raiz); }
 int arbolAVL::getFactorBalanceRaiz() { return obtenerBalance(raiz); }
 int arbolAVL::getCantidad() { return cantidad; }

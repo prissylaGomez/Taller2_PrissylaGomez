@@ -1,0 +1,7 @@
+001; Juan Perez; 25; 37.0; 120; 3; otro; 0; 0; 0; 0
+002; Maria Soto; 67; 39.1; 140; 9; pecho; 0; 0; 0; 3
+003; Pedro Rojas; 43; 36.5; 118; 7; extremidad; 1; 0; 1; 0
+004; Ana Torres; 10; 38.2; 110; 4; cabeza; 0; 0; 0; 0
+005; Luis Diaz; 31; 36.8; 125; 8; pierna; 1; 0; 0; 1
+006; Sofia Gomez; 54; 37.2; 130; 5; cabeza; 0; 1; 0; 0
+007; Carlos Varas; 72; 36.9; 115; 2; abdomen; 0; 0; 0; 4

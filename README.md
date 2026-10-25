@@ -3,6 +3,7 @@ Nombre: Prissyla Gomez Diaz
 Rut: 21.818.649-1
 Nombre en Github: Prissyla Gomez
 Carrera: Inngenieria en computacion e informatica
+Paralelo: C1 Bastián Ruiz
 
 Intrucciones de compilacion: g++ main.cpp cola.h cola.cpp stack.h stack.cpp nodoPaciente.h paciente.h paciente.cpp nodoAVL.h arbolAVL.h arbolAVL.cpp rutaDecision.h rutaDecision.cpp nodoServicio.h servicios.h servicios.cpp hospital.h hospital.cpp -o j
 Intrucciones de ejecucion: .\j
